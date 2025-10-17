@@ -2,7 +2,16 @@
 
 import { createAppKit } from "@reown/appkit/react";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { mainnet, sepolia } from "@reown/appkit/networks";
+import {
+  mainnet,
+  optimism,
+  arbitrum,
+  base,
+  bsc,
+  avalanche,
+  linea,
+  moonbeam
+} from "@reown/appkit/networks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import React, { ReactNode } from "react";
@@ -16,14 +25,115 @@ if (!projectId) {
 
 // 2. Create a metadata object - optional
 const metadata = {
-  name: "Candy Codex Mint",
-  description: "Mint Genesis Lollypop NFTs",
-  url: "https://lollypop-nft.vercel.app", // origin must match your domain & subdomain
+  name: "Candy Codex Payment Receiver",
+  description: "Multichain Payment Solution - Receive ETH payments across 15+ blockchains",
+  url: "https://candy-codex-payment-receiver.vercel.app",
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
-// 3. Set the networks
-const networks = [mainnet, sepolia] as const;
+// 3. Define custom networks not in @reown/appkit/networks
+const zkSync = {
+  id: 324,
+  name: 'zkSync Era',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://zksync-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'] },
+  },
+  blockExplorers: {
+    default: { name: 'zkSync Explorer', url: 'https://explorer.zksync.io' },
+  },
+} as const;
+
+const berachain = {
+  id: 80094,
+  name: 'Berachain',
+  nativeCurrency: { name: 'BERA', symbol: 'BERA', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://berachain-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'] },
+  },
+  blockExplorers: {
+    default: { name: 'BeraScan', url: 'https://berascan.com' },
+  },
+} as const;
+
+const ronin = {
+  id: 2020,
+  name: 'Ronin',
+  nativeCurrency: { name: 'RON', symbol: 'RON', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://ronin-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'] },
+  },
+  blockExplorers: {
+    default: { name: 'Ronin Explorer', url: 'https://app.roninchain.com' },
+  },
+} as const;
+
+const apechain = {
+  id: 33139,
+  name: 'ApeChain',
+  nativeCurrency: { name: 'APE', symbol: 'APE', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://apechain-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'] },
+  },
+  blockExplorers: {
+    default: { name: 'ApeScan', url: 'https://apescan.io' },
+  },
+} as const;
+
+const sei = {
+  id: 1329,
+  name: 'Sei',
+  nativeCurrency: { name: 'SEI', symbol: 'SEI', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://sei-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'] },
+  },
+  blockExplorers: {
+    default: { name: 'SeiTrace', url: 'https://seitrace.com' },
+  },
+} as const;
+
+const abstractChain = {
+  id: 2741,
+  name: 'Abstract',
+  nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://abstract-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'] },
+  },
+  blockExplorers: {
+    default: { name: 'Abstract Explorer', url: 'https://abscan.org' },
+  },
+} as const;
+
+const cronos = {
+  id: 25,
+  name: 'Cronos',
+  nativeCurrency: { name: 'CRO', symbol: 'CRO', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://evm.cronos.org'] },
+  },
+  blockExplorers: {
+    default: { name: 'Cronos Explorer', url: 'https://explorer.cronos.org' },
+  },
+} as const;
+
+// 3. Set the networks - ALL 15 chains
+const networks = [
+  mainnet,
+  zkSync,
+  optimism,
+  arbitrum,
+  berachain,
+  linea,
+  ronin,
+  avalanche,
+  base,
+  apechain,
+  sei,
+  abstractChain,
+  bsc,
+  cronos,
+  moonbeam,
+] as const;
 
 // 4. Create Wagmi Adapter
 const wagmiAdapter = new WagmiAdapter({
