@@ -7,7 +7,11 @@ import { Button } from "@/components/ui/button";
 import { PAYMENT_RECEIVER_ADDRESSES, NETWORK_NAMES, PAYMENT_RECEIVER_ABI } from "@/contracts/paymentReceiver";
 import { useReadContracts } from "wagmi";
 import { formatEther } from "viem";
+import { useState } from "react";
+
 export function MultiChainBalancePanel() {
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   // Get all chain IDs
   const chainIds = Object.keys(PAYMENT_RECEIVER_ADDRESSES).map(Number);
 
@@ -26,8 +30,11 @@ export function MultiChainBalancePanel() {
     },
   });
 
-  const handleRefresh = () => {
-    refetch();
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await refetch();
+    // Keep the spinning animation visible for at least 500ms for better UX
+    setTimeout(() => setIsRefreshing(false), 500);
   };
 
   // Calculate total balance across all chains
@@ -75,10 +82,10 @@ export function MultiChainBalancePanel() {
             variant="outline"
             size="sm"
             onClick={handleRefresh}
-            disabled={isLoading}
+            disabled={isRefreshing || isLoading}
           >
-            <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-            Refresh
+            <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+            {isRefreshing ? 'Refreshing...' : 'Refresh'}
           </Button>
         </div>
       </CardHeader>
