@@ -6,6 +6,7 @@ import { Loader2, Wallet, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PAYMENT_RECEIVER_ADDRESSES, NETWORK_NAMES, PAYMENT_RECEIVER_ABI } from "@/contracts/paymentReceiver";
 import { NETWORK_ICONS } from "@/config/networkIcons";
+import { NATIVE_TOKENS } from "@/config/nativeTokens";
 import { useReadContracts } from "wagmi";
 import { formatEther } from "viem";
 import { useState } from "react";
@@ -96,9 +97,12 @@ export function MultiChainBalancePanel() {
         <div className="mb-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border border-purple-200">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm text-gray-600 mb-1">Total Balance (All Chains)</div>
+              <div className="text-sm text-gray-600 mb-1">Total Value (All Chains)</div>
               <div className="text-3xl font-bold text-gray-900">
-                {formatEther(totalBalance)} ETH
+                {formatEther(totalBalance)}
+              </div>
+              <div className="text-xs text-gray-500 mt-1">
+                Combined native tokens
               </div>
             </div>
             <div className="text-right">
@@ -163,7 +167,9 @@ export function MultiChainBalancePanel() {
                         }`}>
                           {formatEther(chain.balance)}
                         </div>
-                        <span className="text-gray-500 text-xs">ETH</span>
+                        <span className="text-gray-500 text-xs">
+                          {NATIVE_TOKENS[chain.chainId] || "ETH"}
+                        </span>
                       </>
                     )}
                   </div>
