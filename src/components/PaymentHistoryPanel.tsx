@@ -173,7 +173,6 @@ export function PaymentHistoryPanel() {
                             10: 'https://optimistic.etherscan.io',
                             42161: 'https://arbiscan.io',
                             80094: 'https://berascan.com',
-                            59144: 'https://lineascan.build',
                             2020: 'https://app.roninchain.com',
                             43114: 'https://snowtrace.io',
                             8453: 'https://basescan.org',
@@ -181,7 +180,6 @@ export function PaymentHistoryPanel() {
                             1329: 'https://seitrace.com',
                             2741: 'https://abscan.org',
                             56: 'https://bscscan.com',
-                            25: 'https://explorer.cronos.org',
                             1284: 'https://moonscan.io',
                           };
                           const explorerUrl = explorerUrls[chainId] || 'https://etherscan.io';

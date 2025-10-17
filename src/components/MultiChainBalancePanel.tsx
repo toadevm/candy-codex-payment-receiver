@@ -1,7 +1,6 @@
 "use client";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Wallet, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -86,12 +85,18 @@ export function MultiChainBalancePanel() {
       <CardContent>
         {/* Total Balance Summary */}
         <div className="mb-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border border-purple-200">
-          <div className="text-sm text-gray-600 mb-1">Total Balance (All Chains)</div>
-          <div className="text-3xl font-bold text-gray-900">
-            {formatEther(totalBalance)} ETH
-          </div>
-          <div className="text-xs text-gray-500 mt-2">
-            Across {chainIds.length} networks
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm text-gray-600 mb-1">Total Balance (All Chains)</div>
+              <div className="text-3xl font-bold text-gray-900">
+                {formatEther(totalBalance)} ETH
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-xs text-gray-500">
+                Across {chainIds.length} networks
+              </div>
+            </div>
           </div>
         </div>
 
@@ -100,65 +105,55 @@ export function MultiChainBalancePanel() {
             <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
           </div>
         ) : (
-          <div className="border rounded-lg overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Network</TableHead>
-                  <TableHead className="text-right">Balance</TableHead>
-                  <TableHead className="text-right">Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {balanceData.map((chain) => (
-                  <TableRow key={chain.chainId}>
-                    <TableCell>
-                      <div className="flex flex-col gap-1">
-                        <span className="font-medium">{chain.name}</span>
-                        <code className="text-xs bg-gray-100 px-2 py-0.5 rounded w-fit">
-                          {chain.address.slice(0, 6)}...{chain.address.slice(-4)}
-                        </code>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {chain.isLoading ? (
-                        <Loader2 className="h-4 w-4 animate-spin ml-auto" />
-                      ) : chain.hasError ? (
-                        <span className="text-gray-400 text-sm">Error</span>
-                      ) : (
-                        <div className="flex flex-col items-end gap-1">
-                          <span className={`font-mono font-semibold ${
-                            chain.balance > BigInt(0) ? 'text-green-600' : 'text-gray-500'
-                          }`}>
-                            {formatEther(chain.balance)}
-                          </span>
-                          <span className="text-gray-500 text-xs">ETH</span>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {balanceData.map((chain) => (
+              <div
+                key={chain.chainId}
+                className="border rounded-lg p-3 hover:border-purple-300 transition-colors"
+              >
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="font-medium text-sm truncate">{chain.name}</span>
+                    {chain.isLoading ? (
+                      <Loader2 className="h-3 w-3 animate-spin text-gray-400 flex-shrink-0" />
+                    ) : chain.hasError ? (
+                      <Badge variant="destructive" className="text-xs h-5">
+                        Error
+                      </Badge>
+                    ) : chain.balance > BigInt(0) ? (
+                      <Badge variant="default" className="text-xs h-5 bg-green-600">
+                        Active
+                      </Badge>
+                    ) : (
+                      <Badge variant="secondary" className="text-xs h-5">
+                        Empty
+                      </Badge>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    {chain.isLoading ? (
+                      <div className="h-6 bg-gray-100 rounded animate-pulse"></div>
+                    ) : chain.hasError ? (
+                      <span className="text-gray-400 text-xs">Failed to load</span>
+                    ) : (
+                      <>
+                        <div className={`font-mono font-semibold text-lg ${
+                          chain.balance > BigInt(0) ? 'text-green-600' : 'text-gray-500'
+                        }`}>
+                          {formatEther(chain.balance)}
                         </div>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {chain.isLoading ? (
-                        <Badge variant="outline" className="text-xs">
-                          Loading...
-                        </Badge>
-                      ) : chain.hasError ? (
-                        <Badge variant="destructive" className="text-xs">
-                          Error
-                        </Badge>
-                      ) : chain.balance > BigInt(0) ? (
-                        <Badge variant="default" className="text-xs bg-green-600">
-                          Active
-                        </Badge>
-                      ) : (
-                        <Badge variant="secondary" className="text-xs">
-                          Empty
-                        </Badge>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                        <span className="text-gray-500 text-xs">ETH</span>
+                      </>
+                    )}
+                  </div>
+
+                  <code className="text-xs bg-gray-100 px-2 py-1 rounded truncate">
+                    {chain.address.slice(0, 6)}...{chain.address.slice(-4)}
+                  </code>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </CardContent>

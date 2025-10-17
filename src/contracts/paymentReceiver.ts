@@ -206,7 +206,6 @@ export const PAYMENT_RECEIVER_ADDRESSES = {
   10: "0x405792cbed87fbb34afa505f768c8edf8f9504e9" as `0x${string}`, // Optimism
   42161: "0x405792cbed87fbb34afa505f768c8edf8f9504e9" as `0x${string}`, // Arbitrum
   80094: "0x405792cbed87fbb34afa505f768c8edf8f9504e9" as `0x${string}`, // Berachain
-  59144: "0x405792cbed87fbb34afa505f768c8edf8f9504e9" as `0x${string}`, // Linea
   2020: "0x405792CbED87Fbb34afA505F768C8eDF8f9504E9" as `0x${string}`, // Ronin
   43114: "0x405792cbed87fbb34afa505f768c8edf8f9504e9" as `0x${string}`, // Avalanche
   8453: "0x405792cbed87fbb34afa505f768c8edf8f9504e9" as `0x${string}`, // Base
@@ -214,7 +213,6 @@ export const PAYMENT_RECEIVER_ADDRESSES = {
   1329: "0x405792CbED87Fbb34afA505F768C8eDF8f9504E9" as `0x${string}`, // Sei
   2741: "0x405792cbed87fbb34afa505f768c8edf8f9504e9" as `0x${string}`, // Abstract
   56: "0x405792cbed87fbb34afa505f768c8edf8f9504e9" as `0x${string}`, // BSC
-  25: "0x405792CbED87Fbb34afA505F768C8eDF8f9504E9" as `0x${string}`, // Cronos
   1284: "0x405792cbed87fbb34afa505f768c8edf8f9504e9" as `0x${string}`, // Moonbeam
 } as const;
 
@@ -225,7 +223,6 @@ export const NETWORK_NAMES = {
   10: "Optimism",
   42161: "Arbitrum One",
   80094: "Berachain",
-  59144: "Linea",
   2020: "Ronin",
   43114: "Avalanche",
   8453: "Base",
@@ -233,7 +230,6 @@ export const NETWORK_NAMES = {
   1329: "Sei",
   2741: "Abstract",
   56: "BNB Chain",
-  25: "Cronos",
   1284: "Moonbeam",
 } as const;
 

@@ -7,7 +7,6 @@ import {
   base,
   bsc,
   avalanche,
-  linea,
   moonbeam
 } from 'wagmi/chains'
 import { createConfig } from 'wagmi'
@@ -74,18 +73,6 @@ const abstractChain = defineChain({
   },
 })
 
-const cronos = defineChain({
-  id: 25,
-  name: 'Cronos',
-  nativeCurrency: { name: 'CRO', symbol: 'CRO', decimals: 18 },
-  rpcUrls: {
-    default: { http: ['https://evm.cronos.org'] },
-  },
-  blockExplorers: {
-    default: { name: 'Cronos Explorer', url: 'https://explorer.cronos.org' },
-  },
-})
-
 export const config = createConfig({
   chains: [
     mainnet,
@@ -93,7 +80,6 @@ export const config = createConfig({
     optimism,
     arbitrum,
     berachain,
-    linea,
     ronin,
     avalanche,
     base,
@@ -101,7 +87,6 @@ export const config = createConfig({
     sei,
     abstractChain,
     bsc,
-    cronos,
     moonbeam,
   ],
   transports: {
@@ -110,7 +95,6 @@ export const config = createConfig({
     [optimism.id]: http('https://opt-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'),
     [arbitrum.id]: http('https://arb-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'),
     [berachain.id]: http('https://berachain-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'),
-    [linea.id]: http('https://linea-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'),
     [ronin.id]: http('https://ronin-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'),
     [avalanche.id]: http('https://avax-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'),
     [base.id]: http('https://base-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'),
@@ -118,7 +102,6 @@ export const config = createConfig({
     [sei.id]: http('https://sei-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'),
     [abstractChain.id]: http('https://abstract-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'),
     [bsc.id]: http(),
-    [cronos.id]: http(),
     [moonbeam.id]: http(),
   },
 })

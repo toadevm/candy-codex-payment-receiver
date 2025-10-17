@@ -9,7 +9,6 @@ import {
   base,
   bsc,
   avalanche,
-  linea,
   moonbeam
 } from "@reown/appkit/networks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -104,26 +103,13 @@ const abstractChain = {
   },
 } as const;
 
-const cronos = {
-  id: 25,
-  name: 'Cronos',
-  nativeCurrency: { name: 'CRO', symbol: 'CRO', decimals: 18 },
-  rpcUrls: {
-    default: { http: ['https://evm.cronos.org'] },
-  },
-  blockExplorers: {
-    default: { name: 'Cronos Explorer', url: 'https://explorer.cronos.org' },
-  },
-} as const;
-
-// 3. Set the networks - ALL 15 chains
+// 3. Set the networks - ALL 13 chains
 const networks = [
   mainnet,
   zkSync,
   optimism,
   arbitrum,
   berachain,
-  linea,
   ronin,
   avalanche,
   base,
@@ -131,7 +117,6 @@ const networks = [
   sei,
   abstractChain,
   bsc,
-  cronos,
   moonbeam,
 ] as const;
 
