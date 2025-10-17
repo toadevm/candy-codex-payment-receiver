@@ -8,10 +8,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Loader2, Send, Wallet, AlertCircle, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
-import { NETWORK_NAMES } from "@/contracts/paymentReceiver";
-import { useChainId } from "wagmi";
+import { PAYMENT_RECEIVER_ADDRESSES, NETWORK_NAMES } from "@/contracts/paymentReceiver";
+import { NETWORK_ICONS } from "@/config/networkIcons";
+import { useChainId, useSwitchChain } from "wagmi";
+import Image from "next/image";
 
 export function PaymentPanel() {
   const {
@@ -31,7 +34,11 @@ export function PaymentPanel() {
   } = usePaymentReceiver();
 
   const chainId = useChainId();
+  const { switchChain } = useSwitchChain();
   const [paymentAmount, setPaymentAmount] = useState("");
+
+  // Get all available chain IDs
+  const availableChains = Object.keys(PAYMENT_RECEIVER_ADDRESSES).map(Number);
 
   // Handle transaction confirmation
   useEffect(() => {
@@ -132,6 +139,54 @@ export function PaymentPanel() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="chain-select">Select Network</Label>
+            <Select
+              value={chainId.toString()}
+              onValueChange={(value) => {
+                const selectedChainId = parseInt(value);
+                if (switchChain && selectedChainId !== chainId) {
+                  switchChain({ chainId: selectedChainId });
+                }
+              }}
+            >
+              <SelectTrigger id="chain-select">
+                <SelectValue>
+                  <div className="flex items-center gap-2">
+                    {NETWORK_ICONS[chainId] && (
+                      <Image
+                        src={NETWORK_ICONS[chainId]}
+                        alt={NETWORK_NAMES[chainId as keyof typeof NETWORK_NAMES] || "Network"}
+                        width={20}
+                        height={20}
+                        className="rounded-full"
+                      />
+                    )}
+                    <span>{NETWORK_NAMES[chainId as keyof typeof NETWORK_NAMES] || "Select Network"}</span>
+                  </div>
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {availableChains.map((chain) => (
+                  <SelectItem key={chain} value={chain.toString()}>
+                    <div className="flex items-center gap-2">
+                      {NETWORK_ICONS[chain] && (
+                        <Image
+                          src={NETWORK_ICONS[chain]}
+                          alt={NETWORK_NAMES[chain as keyof typeof NETWORK_NAMES]}
+                          width={20}
+                          height={20}
+                          className="rounded-full"
+                        />
+                      )}
+                      <span>{NETWORK_NAMES[chain as keyof typeof NETWORK_NAMES]}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="payment-amount">Amount (ETH)</Label>
             <Input
