@@ -11,7 +11,7 @@ export const NETWORK_ICONS: Record<number, string> = {
   8453: "/icons/base.png",    // Base
   33139: "/icons/ape.png",    // ApeChain
   1329: "/icons/sei.png",     // Sei
-  2741: "/icons/eth.png",     // Abstract (using ETH as placeholder - logo not found)
+  2741: "/icons/abstract.jpg", // Abstract
   56: "/icons/bnb.png",       // BNB Chain
   1284: "/icons/moons.png",   // Moonbeam
 } as const;
