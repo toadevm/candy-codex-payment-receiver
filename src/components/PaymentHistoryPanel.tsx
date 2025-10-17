@@ -17,6 +17,7 @@ export function PaymentHistoryPanel() {
     formatAmount,
     formatTimestamp,
     refetchTotalPayments,
+    contractAddress,
   } = usePaymentReceiver();
 
   const chainId = useChainId();
@@ -184,7 +185,8 @@ export function PaymentHistoryPanel() {
                             1284: 'https://moonscan.io',
                           };
                           const explorerUrl = explorerUrls[chainId] || 'https://etherscan.io';
-                          window.open(`${explorerUrl}/address/${payment.payer}`, '_blank');
+                          // Link to contract events page
+                          window.open(`${explorerUrl}/address/${contractAddress}#events`, '_blank');
                         }}
                       >
                         <ExternalLink className="h-4 w-4" />
