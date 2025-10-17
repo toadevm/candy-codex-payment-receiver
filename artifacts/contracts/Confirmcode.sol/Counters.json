@@ -1,0 +1,13 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "Counters",
+  "sourceName": "contracts/Confirmcode.sol",
+  "abi": [],
+  "bytecode": "0x60556032600b8282823980515f1a607314602657634e487b7160e01b5f525f60045260245ffd5b305f52607381538281f3fe730000000000000000000000000000000000000000301460806040525f5ffdfea2646970667358221220dac24e6bbe7221609b22ecf796dc69ae7e19a5d85f30b5c9ec7db953ced8908e64736f6c634300081c0033",
+  "deployedBytecode": "0x730000000000000000000000000000000000000000301460806040525f5ffdfea2646970667358221220dac24e6bbe7221609b22ecf796dc69ae7e19a5d85f30b5c9ec7db953ced8908e64736f6c634300081c0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/Confirmcode.sol",
+  "buildInfoId": "solc-0_8_28-ee390dd8a6cb87610da0a89633349d0f09ab1f83"
+}
