@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { PaymentPanel } from "@/components/PaymentPanel";
 import { PaymentHistoryPanel } from "@/components/PaymentHistoryPanel";
+import { MultiChainBalancePanel } from "@/components/MultiChainBalancePanel";
 import { useAccount } from "wagmi";
 
 export default function Home() {
@@ -31,6 +32,7 @@ export default function Home() {
           </div>
         ) : (
           <div className="space-y-6">
+            <MultiChainBalancePanel />
             <PaymentPanel />
             <PaymentHistoryPanel />
           </div>
