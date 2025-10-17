@@ -5,9 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { Loader2, Wallet, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PAYMENT_RECEIVER_ADDRESSES, NETWORK_NAMES, PAYMENT_RECEIVER_ABI } from "@/contracts/paymentReceiver";
+import { NETWORK_ICONS } from "@/config/networkIcons";
 import { useReadContracts } from "wagmi";
 import { formatEther } from "viem";
 import { useState } from "react";
+import Image from "next/image";
 
 export function MultiChainBalancePanel() {
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -120,7 +122,18 @@ export function MultiChainBalancePanel() {
               >
                 <div className="flex flex-col gap-2">
                   <div className="flex items-start justify-between gap-2">
-                    <span className="font-medium text-sm truncate">{chain.name}</span>
+                    <div className="flex items-center gap-2 min-w-0">
+                      {NETWORK_ICONS[chain.chainId] && (
+                        <Image
+                          src={NETWORK_ICONS[chain.chainId]}
+                          alt={chain.name}
+                          width={20}
+                          height={20}
+                          className="rounded-full flex-shrink-0"
+                        />
+                      )}
+                      <span className="font-medium text-sm truncate">{chain.name}</span>
+                    </div>
                     {chain.isLoading ? (
                       <Loader2 className="h-3 w-3 animate-spin text-gray-400 flex-shrink-0" />
                     ) : chain.hasError ? (
