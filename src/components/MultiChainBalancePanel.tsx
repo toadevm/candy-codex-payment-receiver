@@ -146,11 +146,17 @@ export function MultiChainBalancePanel() {
                       </Badge>
                     ) : chain.balance > BigInt(0) ? (
                       <Badge variant="default" className="text-xs h-5 bg-green-600">
-                        Active
+                        <div className="flex items-center gap-1">
+                          <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse"></span>
+                          <span>Active</span>
+                        </div>
                       </Badge>
                     ) : (
                       <Badge variant="secondary" className="text-xs h-5">
-                        Empty
+                        <div className="flex items-center gap-1">
+                          <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse"></span>
+                          <span>Active</span>
+                        </div>
                       </Badge>
                     )}
                   </div>
