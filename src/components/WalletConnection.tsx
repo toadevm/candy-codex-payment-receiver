@@ -1,13 +1,15 @@
 "use client";
 
-import { useAccount, useBalance, useDisconnect } from "wagmi";
+import { useAccount, useBalance, useDisconnect, useChainId } from "wagmi";
 import { useAppKit } from "@reown/appkit/react";
 import { formatEther } from "viem";
 import { Button } from "@/components/ui/button";
-import { Wallet, LogOut } from "lucide-react";
+import { Wallet, LogOut, Network } from "lucide-react";
+import { NETWORK_NAMES } from "@/contracts/paymentReceiver";
 
 export function WalletConnection() {
   const { address, isConnected, connector } = useAccount();
+  const chainId = useChainId();
   const { data: balance } = useBalance({
     address,
   });
@@ -16,7 +18,7 @@ export function WalletConnection() {
 
   if (!isConnected) {
     return (
-      <div className="flex justify-center">
+      <div className="flex justify-center gap-2">
         <Button
           variant="outline"
           className="h-12 sm:h-14 px-2 sm:px-6 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 hover:from-purple-100 hover:to-pink-100 min-w-[150px] sm:min-w-[280px]"
@@ -35,8 +37,23 @@ export function WalletConnection() {
     );
   }
 
+  const networkName = NETWORK_NAMES[chainId as keyof typeof NETWORK_NAMES] || `Chain ${chainId}`;
+
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center gap-2">
+      <Button
+        variant="outline"
+        className="h-12 sm:h-14 px-2 sm:px-3 bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200 hover:from-blue-100 hover:to-purple-100"
+        onClick={() => open({ view: 'Networks' })}
+      >
+        <div className="flex items-center gap-1 sm:gap-2">
+          <Network className="h-4 w-4 text-blue-600" />
+          <span className="text-xs sm:text-sm font-medium text-gray-900 hidden sm:inline">
+            {networkName}
+          </span>
+        </div>
+      </Button>
+
       <Button
         variant="outline"
         className="h-12 sm:h-14 px-3 sm:px-6 bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 hover:from-purple-100 hover:to-pink-100 min-w-[200px] sm:min-w-[280px]"

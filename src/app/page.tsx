@@ -2,15 +2,11 @@
 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { OwnerPanel } from "@/components/OwnerPanel";
-import { EmployeePanel } from "@/components/EmployeePanel";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { usePayrollContract } from "@/hooks/usePayrollContract";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { PaymentPanel } from "@/components/PaymentPanel";
+import { PaymentHistoryPanel } from "@/components/PaymentHistoryPanel";
 import { useAccount } from "wagmi";
 
 export default function Home() {
-  const { isOwner } = usePayrollContract();
   const { isConnected } = useAccount();
 
   return (
@@ -21,49 +17,23 @@ export default function Home() {
         {!isConnected ? (
           <div className="max-w-2xl mx-auto mt-12 text-center">
             <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 font-chewy">
-              Welcome to Automated Payroll System
+              Welcome to Payment Receiver
             </h1>
             <p className="text-lg text-gray-600 mb-6 font-dynapuff">
-              Connect your wallet to access your payroll dashboard
+              Connect your wallet to send and receive payments across multiple chains
             </p>
             <p className="text-base text-gray-500 font-dynapuff">
-              This decentralized application allows employers to manage automated
-              salary payments for their employees using blockchain technology.
-              Employees can view their payment schedules and claim their salaries
-              when due.
+              This decentralized application allows anyone to send ETH payments to
+              our multichain payment receiver contract. The contract owner can
+              withdraw collected funds at any time. All transactions are transparent
+              and recorded on the blockchain.
             </p>
           </div>
         ) : (
-          <Tabs defaultValue={isOwner ? "owner" : "employee"} className="w-full">
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
-              <TabsTrigger value="owner">Owner Dashboard</TabsTrigger>
-              <TabsTrigger value="employee">Employee Dashboard</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="owner" className="space-y-4">
-              {isOwner ? (
-                <OwnerPanel />
-              ) : (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Owner Access Required</CardTitle>
-                    <CardDescription>
-                      You must be the contract owner to access this panel
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                      Only the contract owner can manage employees and payroll settings.
-                    </p>
-                  </CardContent>
-                </Card>
-              )}
-            </TabsContent>
-
-            <TabsContent value="employee" className="space-y-4">
-              <EmployeePanel />
-            </TabsContent>
-          </Tabs>
+          <div className="space-y-6">
+            <PaymentPanel />
+            <PaymentHistoryPanel />
+          </div>
         )}
       </main>
 

@@ -10,9 +10,11 @@ export function Header() {
           <div className="flex items-center space-x-2 sm:space-x-3">
             <div>
               <h1 className="text-2xl tracking-wider sm:text-3xl font-bold font-chewy">
-                🍭 Candy Codex Payroll
+                🍭 Candy Codex Payment Receiver
               </h1>
-             
+              <p className="text-sm sm:text-base text-purple-100 font-dynapuff">
+                Multichain Payment Solution
+              </p>
             </div>
           </div>
 

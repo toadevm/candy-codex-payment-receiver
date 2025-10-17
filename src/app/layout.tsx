@@ -21,12 +21,12 @@ const dynaPuff = DynaPuff({
 });
 
 export const metadata: Metadata = {
-  title: "Automated Payroll System - Blockchain Salary Management",
-  description: "Manage automated employee payroll on the blockchain with secure, transparent, and timely salary payments using smart contracts.",
-  keywords: ["Payroll", "Blockchain", "Ethereum", "Smart Contracts", "Automated Payments", "Salary Management", "Web3"],
+  title: "Candy Codex Payment Receiver - Multichain Payment Solution",
+  description: "Send and receive ETH payments across multiple blockchains with our secure, transparent payment receiver smart contract. Supporting 15+ chains including Ethereum, zkSync, Optimism, Arbitrum, and more.",
+  keywords: ["Payment Receiver", "Multichain", "Blockchain", "Ethereum", "Smart Contracts", "Crypto Payments", "Web3", "DeFi", "zkSync", "Optimism", "Arbitrum"],
   openGraph: {
-    title: "Automated Payroll System - Blockchain Salary Management",
-    description: "Manage automated employee payroll on the blockchain with secure, transparent, and timely salary payments using smart contracts.",
+    title: "Candy Codex Payment Receiver - Multichain Payment Solution",
+    description: "Send and receive ETH payments across multiple blockchains with our secure, transparent payment receiver smart contract.",
     type: "website",
   },
 };
