@@ -19,22 +19,20 @@ export default function Home() {
 
       <main className="container mx-auto px-4 py-8 flex-grow">
         {!isConnected ? (
-          <Card className="max-w-2xl mx-auto mt-12">
-            <CardHeader>
-              <CardTitle>Welcome to Automated Payroll System</CardTitle>
-              <CardDescription>
-                Connect your wallet to access your payroll dashboard
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                This decentralized application allows employers to manage automated
-                salary payments for their employees using blockchain technology.
-                Employees can view their payment schedules and claim their salaries
-                when due.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="max-w-2xl mx-auto mt-12 text-center">
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 font-chewy">
+              Welcome to Automated Payroll System
+            </h1>
+            <p className="text-lg text-gray-600 mb-6 font-dynapuff">
+              Connect your wallet to access your payroll dashboard
+            </p>
+            <p className="text-base text-gray-500 font-dynapuff">
+              This decentralized application allows employers to manage automated
+              salary payments for their employees using blockchain technology.
+              Employees can view their payment schedules and claim their salaries
+              when due.
+            </p>
+          </div>
         ) : (
           <Tabs defaultValue={isOwner ? "owner" : "employee"} className="w-full">
             <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8">
