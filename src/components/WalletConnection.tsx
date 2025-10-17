@@ -4,8 +4,10 @@ import { useAccount, useBalance, useDisconnect, useChainId } from "wagmi";
 import { useAppKit } from "@reown/appkit/react";
 import { formatEther } from "viem";
 import { Button } from "@/components/ui/button";
-import { Wallet, LogOut, Network } from "lucide-react";
+import { Wallet, LogOut } from "lucide-react";
 import { NETWORK_NAMES } from "@/contracts/paymentReceiver";
+import { NETWORK_ICONS } from "@/config/networkIcons";
+import Image from "next/image";
 
 export function WalletConnection() {
   const { address, isConnected, connector } = useAccount();
@@ -47,7 +49,15 @@ export function WalletConnection() {
         onClick={() => open({ view: 'Networks' })}
       >
         <div className="flex items-center gap-1 sm:gap-2">
-          <Network className="h-4 w-4 text-blue-600" />
+          {NETWORK_ICONS[chainId] && (
+            <Image
+              src={NETWORK_ICONS[chainId]}
+              alt={networkName}
+              width={20}
+              height={20}
+              className="rounded-full"
+            />
+          )}
           <span className="text-xs sm:text-sm font-medium text-gray-900 hidden sm:inline">
             {networkName}
           </span>

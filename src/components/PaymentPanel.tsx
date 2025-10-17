@@ -260,6 +260,54 @@ export function PaymentPanel() {
                   Owner Controls
                 </div>
 
+                <div className="space-y-2">
+                  <Label htmlFor="withdraw-chain-select">Withdraw Network</Label>
+                  <Select
+                    value={chainId.toString()}
+                    onValueChange={(value) => {
+                      const selectedChainId = parseInt(value);
+                      if (switchChain && selectedChainId !== chainId) {
+                        switchChain({ chainId: selectedChainId });
+                      }
+                    }}
+                  >
+                    <SelectTrigger id="withdraw-chain-select">
+                      <SelectValue>
+                        <div className="flex items-center gap-2">
+                          {NETWORK_ICONS[chainId] && (
+                            <Image
+                              src={NETWORK_ICONS[chainId]}
+                              alt={NETWORK_NAMES[chainId as keyof typeof NETWORK_NAMES] || "Network"}
+                              width={20}
+                              height={20}
+                              className="rounded-full"
+                            />
+                          )}
+                          <span>{NETWORK_NAMES[chainId as keyof typeof NETWORK_NAMES] || "Select Network"}</span>
+                        </div>
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {availableChains.map((chain) => (
+                        <SelectItem key={chain} value={chain.toString()}>
+                          <div className="flex items-center gap-2">
+                            {NETWORK_ICONS[chain] && (
+                              <Image
+                                src={NETWORK_ICONS[chain]}
+                                alt={NETWORK_NAMES[chain as keyof typeof NETWORK_NAMES]}
+                                width={20}
+                                height={20}
+                                className="rounded-full"
+                              />
+                            )}
+                            <span>{NETWORK_NAMES[chain as keyof typeof NETWORK_NAMES]}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 <Button
                   onClick={handleWithdraw}
                   disabled={isPending || isConfirming || !contractBalance || contractBalance === BigInt(0)}
