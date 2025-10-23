@@ -29,7 +29,7 @@ export function MultiChainBalancePanel() {
   const { data, isLoading, refetch } = useReadContracts({
     contracts,
     query: {
-      refetchInterval: 30000, // Refetch every 30 seconds
+      refetchInterval: false, // Disable auto-refetch - only refresh when user clicks button
     },
   });
 
@@ -86,6 +86,7 @@ export function MultiChainBalancePanel() {
             size="sm"
             onClick={handleRefresh}
             disabled={isRefreshing || isLoading}
+            className="shadow-md hover:shadow-lg transition-shadow"
           >
             <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
             {isRefreshing ? 'Refreshing...' : 'Refresh'}

@@ -6,8 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, Plus, CheckCircle2, AlertCircle, Network } from "lucide-react";
+import { Loader2, Plus, CheckCircle2, AlertCircle, Network, Upload, X } from "lucide-react";
 import { toast } from "sonner";
+import Image from "next/image";
 
 interface NetworkFormData {
   chainId: string;
@@ -22,6 +23,8 @@ interface NetworkFormData {
 export function NetworkManager() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [iconFile, setIconFile] = useState<File | null>(null);
+  const [iconPreview, setIconPreview] = useState<string | null>(null);
   const [formData, setFormData] = useState<NetworkFormData>({
     chainId: "",
     name: "",
@@ -35,6 +38,50 @@ export function NetworkManager() {
   const handleInputChange = (field: keyof NetworkFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     setSuccess(false);
+  };
+
+  const handleIconUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.match(/^image\/(png|jpg|jpeg|svg\+xml|webp)$/)) {
+      toast.error("Invalid File Type", {
+        description: "Please upload a PNG, JPG, SVG, or WebP image.",
+      });
+      return;
+    }
+
+    // Validate file size (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("File Too Large", {
+        description: "Please upload an image smaller than 2MB.",
+      });
+      return;
+    }
+
+    setIconFile(file);
+
+    // Create preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setIconPreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+
+    // Auto-generate icon URL based on filename
+    const iconPath = `/icons/${file.name}`;
+    setFormData((prev) => ({ ...prev, iconUrl: iconPath }));
+
+    toast.success("Icon Uploaded", {
+      description: "Icon preview loaded successfully.",
+    });
+  };
+
+  const handleRemoveIcon = () => {
+    setIconFile(null);
+    setIconPreview(null);
+    setFormData((prev) => ({ ...prev, iconUrl: "" }));
   };
 
   const validateForm = (): boolean => {
@@ -80,9 +127,9 @@ export function NetworkManager() {
       return false;
     }
 
-    if (!formData.iconUrl.match(/^\/icons\/.+\.(png|jpg|jpeg|svg|webp)$/)) {
-      toast.error("Invalid Icon Path", {
-        description: "Icon URL must be in format: /icons/filename.png",
+    if (!iconFile && !formData.iconUrl.match(/^\/icons\/.+\.(png|jpg|jpeg|svg|webp)$/)) {
+      toast.error("Icon Required", {
+        description: "Please upload an icon image or provide a valid icon path.",
       });
       return false;
     }
@@ -101,6 +148,27 @@ export function NetworkManager() {
     setSuccess(false);
 
     try {
+      // First, upload the icon if provided
+      if (iconFile) {
+        const formDataUpload = new FormData();
+        formDataUpload.append("icon", iconFile);
+
+        const uploadResponse = await fetch("/api/upload-icon", {
+          method: "POST",
+          body: formDataUpload,
+        });
+
+        if (!uploadResponse.ok) {
+          const uploadError = await uploadResponse.json();
+          throw new Error(uploadError.error || "Failed to upload icon");
+        }
+
+        toast.info("Icon uploaded successfully", {
+          description: "Now saving network configuration...",
+        });
+      }
+
+      // Then add the network configuration
       const response = await fetch("/api/add-network", {
         method: "POST",
         headers: {
@@ -139,6 +207,8 @@ export function NetworkManager() {
         explorerUrl: "",
         iconUrl: "",
       });
+      setIconFile(null);
+      setIconPreview(null);
     } catch (error) {
       console.error("Error adding network:", error);
       toast.error("Failed to Add Network", {
@@ -248,19 +318,56 @@ export function NetworkManager() {
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="iconUrl">Icon Path *</Label>
-              <Input
-                id="iconUrl"
-                type="text"
-                placeholder="/icons/cro.png"
-                value={formData.iconUrl}
-                onChange={(e) => handleInputChange("iconUrl", e.target.value)}
-                disabled={isSubmitting}
-                required
-              />
-              <p className="text-xs text-gray-500">
-                Path to icon in public folder (e.g., /icons/network.png)
-              </p>
+              <Label htmlFor="icon">Network Icon *</Label>
+              <div className="flex gap-3">
+                <div className="flex-1">
+                  <div className="relative">
+                    <Input
+                      id="icon"
+                      type="file"
+                      accept="image/png,image/jpeg,image/jpg,image/svg+xml,image/webp"
+                      onChange={handleIconUpload}
+                      disabled={isSubmitting}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor="icon"
+                      className="flex items-center justify-center gap-2 w-full px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition-colors"
+                    >
+                      <Upload className="h-5 w-5 text-gray-500" />
+                      <span className="text-sm text-gray-600">
+                        {iconFile ? iconFile.name : "Click to upload icon"}
+                      </span>
+                    </label>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    PNG, JPG, SVG, or WebP (max 2MB)
+                  </p>
+                </div>
+                {iconPreview && (
+                  <div className="relative w-20 h-20 border-2 border-gray-200 rounded-lg overflow-hidden">
+                    <Image
+                      src={iconPreview}
+                      alt="Icon preview"
+                      fill
+                      className="object-contain p-2"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleRemoveIcon}
+                      className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+                      title="Remove icon"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
+                )}
+              </div>
+              {formData.iconUrl && (
+                <p className="text-xs text-green-600 mt-1">
+                  Icon will be saved as: {formData.iconUrl}
+                </p>
+              )}
             </div>
           </div>
 

@@ -185,7 +185,7 @@ export function PaymentPanel() {
                 <Button
                   onClick={handleWithdraw}
                   disabled={isPending || isConfirming || !contractBalance || contractBalance === BigInt(0)}
-                  className="w-full"
+                  className="w-full shadow-md hover:shadow-lg transition-shadow"
                   variant="outline"
                 >
                   {isPending || isConfirming ? (
@@ -204,7 +204,7 @@ export function PaymentPanel() {
                 <Button
                   onClick={handleEmergencyWithdraw}
                   disabled={isPending || isConfirming || !contractBalance || contractBalance === BigInt(0)}
-                  className="w-full"
+                  className="w-full shadow-md hover:shadow-lg transition-shadow"
                   variant="destructive"
                 >
                   {isPending || isConfirming ? (

@@ -53,14 +53,6 @@ export default function AdminPage() {
             </Alert>
           ) : (
             <div className="space-y-6">
-              <Alert className="bg-blue-50 border-blue-200">
-                <AlertCircle className="h-4 w-4 text-blue-600" />
-                <AlertDescription className="text-blue-700">
-                  <strong>Development Mode:</strong> Admin access is currently open. To restrict access,
-                  configure ADMIN_ADDRESSES in /src/app/admin/page.tsx with authorized wallet addresses.
-                </AlertDescription>
-              </Alert>
-
               <NetworkManager />
 
               <Alert className="bg-yellow-50 border-yellow-200">
