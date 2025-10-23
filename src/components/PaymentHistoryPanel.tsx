@@ -86,11 +86,10 @@ export function PaymentHistoryPanel() {
             </CardDescription>
           </div>
           <Button
-            variant="outline"
             size="sm"
             onClick={handleRefresh}
             disabled={isLoading}
-            className="shadow-md hover:shadow-lg transition-shadow"
+            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 border-0"
           >
             <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
             Refresh

@@ -185,8 +185,7 @@ export function PaymentPanel() {
                 <Button
                   onClick={handleWithdraw}
                   disabled={isPending || isConfirming || !contractBalance || contractBalance === BigInt(0)}
-                  className="w-full shadow-md hover:shadow-lg transition-shadow"
-                  variant="outline"
+                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 border-0"
                 >
                   {isPending || isConfirming ? (
                     <>
@@ -204,7 +203,7 @@ export function PaymentPanel() {
                 <Button
                   onClick={handleEmergencyWithdraw}
                   disabled={isPending || isConfirming || !contractBalance || contractBalance === BigInt(0)}
-                  className="w-full shadow-md hover:shadow-lg transition-shadow"
+                  className="w-full shadow-lg hover:shadow-xl transition-all duration-300"
                   variant="destructive"
                 >
                   {isPending || isConfirming ? (
