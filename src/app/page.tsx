@@ -2,6 +2,7 @@
 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { TabNavigation } from "@/components/TabNavigation";
 import { PaymentPanel } from "@/components/PaymentPanel";
 import { PaymentHistoryPanel } from "@/components/PaymentHistoryPanel";
 import { MultiChainBalancePanel } from "@/components/MultiChainBalancePanel";
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header />
+      <TabNavigation />
 
       <main className="container mx-auto px-4 py-8 flex-grow">
         {!isConnected ? (
