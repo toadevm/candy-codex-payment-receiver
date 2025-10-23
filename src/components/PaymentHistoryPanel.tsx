@@ -2,7 +2,6 @@
 
 import { usePaymentReceiver } from "@/hooks/usePaymentReceiver";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -125,78 +124,68 @@ export function PaymentHistoryPanel() {
             </p>
           </div>
         ) : (
-          <div className="border rounded-lg overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-20">ID</TableHead>
-                  <TableHead>Payer</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
-                  <TableHead>Timestamp</TableHead>
-                  <TableHead className="w-20"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {payments.map((payment) => (
-                  <TableRow
-                    key={payment.id}
-                    className="border-2 !border-purple-600 hover:!border-purple-500 transition-all duration-300 bg-white"
-                  >
-                    <TableCell className="font-mono text-sm">
-                      #{payment.id}
-                    </TableCell>
-                    <TableCell>
+          <div className="space-y-3">
+            {payments.map((payment) => {
+              // Get the correct block explorer URL based on chainId
+              const explorerUrls: Record<number, string> = {
+                1: 'https://etherscan.io',
+                324: 'https://explorer.zksync.io',
+                10: 'https://optimistic.etherscan.io',
+                42161: 'https://arbiscan.io',
+                80094: 'https://berascan.com',
+                2020: 'https://app.roninchain.com',
+                43114: 'https://snowtrace.io',
+                8453: 'https://basescan.org',
+                33139: 'https://apescan.io',
+                1329: 'https://seitrace.com',
+                2741: 'https://abscan.org',
+                56: 'https://bscscan.com',
+                1284: 'https://moonscan.io',
+              };
+              const explorerUrl = explorerUrls[chainId] || 'https://etherscan.io';
+
+              return (
+                <div
+                  key={payment.id}
+                  className="border-2 border-dashed !border-purple-600 hover:!border-purple-500 rounded-lg p-4 hover:shadow-lg transition-all duration-300 bg-white"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-4 flex-1">
+                      <div className="font-mono text-sm font-semibold text-purple-700">
+                        #{payment.id}
+                      </div>
                       <div className="flex items-center gap-2">
+                        <span className="text-xs text-gray-500">Payer:</span>
                         <code className="text-xs bg-gray-100 px-2 py-1 rounded">
                           {payment.payer.slice(0, 6)}...{payment.payer.slice(-4)}
                         </code>
                       </div>
-                    </TableCell>
-                    <TableCell className="text-right font-mono">
-                      <div className="flex items-center justify-end gap-2">
-                        <span className="font-semibold text-green-600">
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono font-bold text-green-600 text-lg">
                           {formatAmount(payment.amount)}
                         </span>
                         <span className="text-gray-500 text-xs">ETH</span>
                       </div>
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-600">
-                      {formatTimestamp(payment.timestamp)}
-                    </TableCell>
-                    <TableCell>
+                      <div className="text-sm text-gray-600">
+                        {formatTimestamp(payment.timestamp)}
+                      </div>
                       <Button
                         variant="ghost"
                         size="sm"
                         className="h-8 w-8 p-0"
                         onClick={() => {
-                          // Get the correct block explorer URL based on chainId
-                          const explorerUrls: Record<number, string> = {
-                            1: 'https://etherscan.io',
-                            324: 'https://explorer.zksync.io',
-                            10: 'https://optimistic.etherscan.io',
-                            42161: 'https://arbiscan.io',
-                            80094: 'https://berascan.com',
-                            2020: 'https://app.roninchain.com',
-                            43114: 'https://snowtrace.io',
-                            8453: 'https://basescan.org',
-                            33139: 'https://apescan.io',
-                            1329: 'https://seitrace.com',
-                            2741: 'https://abscan.org',
-                            56: 'https://bscscan.com',
-                            1284: 'https://moonscan.io',
-                          };
-                          const explorerUrl = explorerUrls[chainId] || 'https://etherscan.io';
-                          // Link to contract events page
                           window.open(`${explorerUrl}/address/${contractAddress}#events`, '_blank');
                         }}
                       >
                         <ExternalLink className="h-4 w-4" />
                       </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
 
