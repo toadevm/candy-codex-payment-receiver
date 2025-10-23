@@ -90,6 +90,7 @@ export function PaymentHistoryPanel() {
             size="sm"
             onClick={handleRefresh}
             disabled={isLoading}
+            className="shadow-md hover:shadow-lg transition-shadow"
           >
             <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
             Refresh

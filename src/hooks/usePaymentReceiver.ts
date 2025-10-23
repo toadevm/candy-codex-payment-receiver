@@ -48,6 +48,7 @@ export function usePaymentReceiver() {
     functionName: 'getBalance',
     query: {
       enabled: !!contractAddress,
+      refetchInterval: false, // Disable auto-refetch
     },
   });
 
@@ -58,6 +59,7 @@ export function usePaymentReceiver() {
     functionName: 'totalPayments',
     query: {
       enabled: !!contractAddress,
+      refetchInterval: false, // Disable auto-refetch
     },
   });
 
@@ -83,6 +85,7 @@ export function usePaymentReceiver() {
       args: [BigInt(count)],
       query: {
         enabled: !!contractAddress && count > 0,
+        refetchInterval: false, // Disable auto-refetch - only refresh when user clicks button
       },
     });
   };

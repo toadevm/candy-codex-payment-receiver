@@ -55,19 +55,7 @@ export default function AdminPage() {
             <div className="space-y-6">
               <NetworkManager />
 
-              <Alert className="bg-yellow-50 border-yellow-200">
-                <AlertCircle className="h-4 w-4 text-yellow-600" />
-                <AlertDescription className="text-yellow-700">
-                  <strong>Post-Addition Steps:</strong>
-                  <ol className="list-decimal ml-5 mt-2 space-y-1">
-                    <li>Upload the network icon to <code className="bg-yellow-100 px-1 rounded">public/icons/</code></li>
-                    <li>Review the updated configuration files</li>
-                    <li>Commit changes to your repository</li>
-                    <li>Run <code className="bg-yellow-100 px-1 rounded">npm run build</code></li>
-                    <li>Deploy the updated application</li>
-                  </ol>
-                </AlertDescription>
-              </Alert>
+              
             </div>
           )}
         </div>
