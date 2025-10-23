@@ -1,6 +1,6 @@
 {
-  "name": "lollypop-nft-dapp",
-  "version": "0.1.0",
+  "name": "multi-chain-payment-receiver",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
