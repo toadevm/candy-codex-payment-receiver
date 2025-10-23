@@ -243,7 +243,7 @@ export function NetworkManager() {
                 onChange={(e) => handleInputChange("chainId", e.target.value)}
                 disabled={isSubmitting}
                 required
-                className="border-2 border-gray-300 focus:border-purple-500"
+                className="border-2 border-black focus:border-purple-500"
               />
               <p className="text-xs text-gray-500">Numeric chain identifier</p>
             </div>
@@ -258,7 +258,7 @@ export function NetworkManager() {
                 onChange={(e) => handleInputChange("name", e.target.value)}
                 disabled={isSubmitting}
                 required
-                className="border-2 border-gray-300 focus:border-purple-500"
+                className="border-2 border-black focus:border-purple-500"
               />
               <p className="text-xs text-gray-500">Display name for the network</p>
             </div>
@@ -273,7 +273,7 @@ export function NetworkManager() {
                 onChange={(e) => handleInputChange("nativeTokenSymbol", e.target.value)}
                 disabled={isSubmitting}
                 required
-                className="border-2 border-gray-300 focus:border-purple-500"
+                className="border-2 border-black focus:border-purple-500"
               />
               <p className="text-xs text-gray-500">e.g., ETH, CRO, BNB</p>
             </div>
@@ -288,7 +288,7 @@ export function NetworkManager() {
                 onChange={(e) => handleInputChange("contractAddress", e.target.value)}
                 disabled={isSubmitting}
                 required
-                className="border-2 border-gray-300 focus:border-purple-500"
+                className="border-2 border-black focus:border-purple-500"
               />
               <p className="text-xs text-gray-500">Payment receiver contract address</p>
             </div>
@@ -303,7 +303,7 @@ export function NetworkManager() {
                 onChange={(e) => handleInputChange("rpcUrl", e.target.value)}
                 disabled={isSubmitting}
                 required
-                className="border-2 border-gray-300 focus:border-purple-500"
+                className="border-2 border-black focus:border-purple-500"
               />
               <p className="text-xs text-gray-500">Network RPC endpoint</p>
             </div>
@@ -318,7 +318,7 @@ export function NetworkManager() {
                 onChange={(e) => handleInputChange("explorerUrl", e.target.value)}
                 disabled={isSubmitting}
                 required
-                className="border-2 border-gray-300 focus:border-purple-500"
+                className="border-2 border-black focus:border-purple-500"
               />
               <p className="text-xs text-gray-500">Block explorer base URL</p>
             </div>
