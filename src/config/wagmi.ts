@@ -73,6 +73,18 @@ const abstractChain = defineChain({
   },
 })
 
+const cronos = defineChain({
+  id: 25,
+  name: 'Cronos',
+  nativeCurrency: { name: 'CRO', symbol: 'CRO', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://cronos-evm-rpc.publicnode.com'] },
+  },
+  blockExplorers: {
+    default: { name: 'Cronos Explorer', url: 'https://explorer.cronos.org' },
+  },
+})
+
 export const config = createConfig({
   chains: [
     mainnet,
@@ -88,6 +100,7 @@ export const config = createConfig({
     abstractChain,
     bsc,
     moonbeam,
+    cronos,
   ],
   transports: {
     [mainnet.id]: http('https://eth-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'),
@@ -103,6 +116,7 @@ export const config = createConfig({
     [abstractChain.id]: http('https://abstract-mainnet.g.alchemy.com/v2/kAmtb3hCAJaBhgQWSJBVs'),
     [bsc.id]: http(),
     [moonbeam.id]: http(),
+    [cronos.id]: http(),
   },
 })
 

@@ -1,15 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { usePaymentReceiver } from "@/hooks/usePaymentReceiver";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2, Send, Wallet, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Loader2, Wallet, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { PAYMENT_RECEIVER_ADDRESSES, NETWORK_NAMES } from "@/contracts/paymentReceiver";
 import { NETWORK_ICONS } from "@/config/networkIcons";
@@ -22,7 +21,6 @@ export function PaymentPanel() {
     isContractAvailable,
     contractBalance,
     isOwner,
-    sendPayment,
     withdraw,
     emergencyWithdraw,
     isPending,
@@ -35,7 +33,6 @@ export function PaymentPanel() {
 
   const chainId = useChainId();
   const { switchChain } = useSwitchChain();
-  const [paymentAmount, setPaymentAmount] = useState("");
 
   // Get all available chain IDs
   const availableChains = Object.keys(PAYMENT_RECEIVER_ADDRESSES).map(Number);
@@ -46,7 +43,6 @@ export function PaymentPanel() {
       toast.success("Transaction confirmed!", {
         description: "Your transaction has been successfully processed.",
       });
-      setPaymentAmount("");
       refetchBalance();
     }
   }, [isConfirmed, refetchBalance]);
@@ -59,24 +55,6 @@ export function PaymentPanel() {
       });
     }
   }, [error]);
-
-  const handleSendPayment = () => {
-    if (!paymentAmount || parseFloat(paymentAmount) <= 0) {
-      toast.error("Invalid amount", {
-        description: "Please enter a valid payment amount.",
-      });
-      return;
-    }
-
-    try {
-      sendPayment(paymentAmount);
-      toast.info("Transaction submitted", {
-        description: "Please confirm the transaction in your wallet.",
-      });
-    } catch (err) {
-      console.error("Error sending payment:", err);
-    }
-  };
 
   const handleWithdraw = () => {
     try {
@@ -126,111 +104,7 @@ export function PaymentPanel() {
   }
 
   return (
-    <div className="grid gap-6 md:grid-cols-2">
-      {/* Send Payment Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Send className="h-5 w-5" />
-            Send Payment
-          </CardTitle>
-          <CardDescription>
-            Send ETH to the payment receiver contract
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="chain-select">Select Network</Label>
-            <Select
-              value={chainId.toString()}
-              onValueChange={(value) => {
-                const selectedChainId = parseInt(value);
-                if (switchChain && selectedChainId !== chainId) {
-                  switchChain({ chainId: selectedChainId });
-                }
-              }}
-            >
-              <SelectTrigger id="chain-select">
-                <SelectValue>
-                  <div className="flex items-center gap-2">
-                    {NETWORK_ICONS[chainId] && (
-                      <Image
-                        src={NETWORK_ICONS[chainId]}
-                        alt={NETWORK_NAMES[chainId as keyof typeof NETWORK_NAMES] || "Network"}
-                        width={20}
-                        height={20}
-                        className="rounded-full"
-                      />
-                    )}
-                    <span>{NETWORK_NAMES[chainId as keyof typeof NETWORK_NAMES] || "Select Network"}</span>
-                  </div>
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {availableChains.map((chain) => (
-                  <SelectItem key={chain} value={chain.toString()}>
-                    <div className="flex items-center gap-2">
-                      {NETWORK_ICONS[chain] && (
-                        <Image
-                          src={NETWORK_ICONS[chain]}
-                          alt={NETWORK_NAMES[chain as keyof typeof NETWORK_NAMES]}
-                          width={20}
-                          height={20}
-                          className="rounded-full"
-                        />
-                      )}
-                      <span>{NETWORK_NAMES[chain as keyof typeof NETWORK_NAMES]}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="payment-amount">Amount (ETH)</Label>
-            <Input
-              id="payment-amount"
-              type="number"
-              step="0.001"
-              placeholder="0.0"
-              value={paymentAmount}
-              onChange={(e) => setPaymentAmount(e.target.value)}
-              disabled={isPending || isConfirming}
-            />
-          </div>
-
-          <Button
-            onClick={handleSendPayment}
-            disabled={isPending || isConfirming || !paymentAmount}
-            className="w-full"
-          >
-            {isPending || isConfirming ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {isPending ? "Confirm in wallet..." : "Processing..."}
-              </>
-            ) : (
-              <>
-                <Send className="mr-2 h-4 w-4" />
-                Send Payment
-              </>
-            )}
-          </Button>
-
-          {isConfirmed && (
-            <Alert className="bg-green-50 border-green-200">
-              <CheckCircle2 className="h-4 w-4 text-green-600" />
-              <AlertDescription className="text-green-700">
-                Payment sent successfully!
-              </AlertDescription>
-            </Alert>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Contract Balance & Owner Controls */}
-      <Card>
+    <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Wallet className="h-5 w-5" />
@@ -358,6 +232,5 @@ export function PaymentPanel() {
           )}
         </CardContent>
       </Card>
-    </div>
   );
 }

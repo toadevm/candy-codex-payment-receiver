@@ -14,4 +14,5 @@ export const NETWORK_ICONS: Record<number, string> = {
   2741: "/icons/abstract.jpg", // Abstract
   56: "/icons/bnb.png",       // BNB Chain
   1284: "/icons/moons.png",   // Moonbeam
+  25: "/icons/cro.png", // Cronos
 } as const;

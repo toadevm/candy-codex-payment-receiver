@@ -13,4 +13,5 @@ export const NATIVE_TOKENS: Record<number, string> = {
   2741: "ETH",     // Abstract
   56: "BNB",       // BNB Chain
   1284: "GLMR",    // Moonbeam
+  25: "CRO",       // Cronos
 } as const;

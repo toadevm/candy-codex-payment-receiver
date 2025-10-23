@@ -214,6 +214,7 @@ export const PAYMENT_RECEIVER_ADDRESSES = {
   2741: "0x405792cbed87fbb34afa505f768c8edf8f9504e9" as `0x${string}`, // Abstract
   56: "0x405792cbed87fbb34afa505f768c8edf8f9504e9" as `0x${string}`, // BSC
   1284: "0x405792cbed87fbb34afa505f768c8edf8f9504e9" as `0x${string}`, // Moonbeam
+  25: "0x405792CbED87Fbb34afA505F768C8eDF8f9504E9" as `0x${string}`, // Cronos
 } as const;
 
 // Network names mapping
@@ -231,6 +232,7 @@ export const NETWORK_NAMES = {
   2741: "Abstract",
   56: "BNB Chain",
   1284: "Moonbeam",
+  25: "Cronos",
 } as const;
 
 export type SupportedChainId = keyof typeof PAYMENT_RECEIVER_ADDRESSES;
