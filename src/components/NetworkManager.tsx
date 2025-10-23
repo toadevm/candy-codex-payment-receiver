@@ -338,9 +338,9 @@ export function NetworkManager() {
                     />
                     <label
                       htmlFor="icon"
-                      className="flex items-center justify-center gap-2 w-full px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition-colors"
+                      className="flex items-center justify-center gap-2 w-full px-4 py-2 border-2 border-dashed !border-purple-600 rounded-lg cursor-pointer hover:!border-purple-500 hover:bg-purple-50 transition-colors"
                     >
-                      <Upload className="h-5 w-5 text-gray-500" />
+                      <Upload className="h-5 w-5 text-purple-600" />
                       <span className="text-sm text-gray-600">
                         {iconFile ? iconFile.name : "Click to upload icon"}
                       </span>

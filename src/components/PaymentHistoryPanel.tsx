@@ -138,7 +138,10 @@ export function PaymentHistoryPanel() {
               </TableHeader>
               <TableBody>
                 {payments.map((payment) => (
-                  <TableRow key={payment.id}>
+                  <TableRow
+                    key={payment.id}
+                    className="border-2 !border-purple-600 hover:!border-purple-500 transition-all duration-300 bg-white"
+                  >
                     <TableCell className="font-mono text-sm">
                       #{payment.id}
                     </TableCell>

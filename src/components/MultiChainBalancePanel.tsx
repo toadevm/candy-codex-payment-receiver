@@ -122,7 +122,7 @@ export function MultiChainBalancePanel() {
             {balanceData.map((chain) => (
               <div
                 key={chain.chainId}
-                className="border rounded-lg p-3 hover:border-purple-300 transition-all duration-300 shadow-lg hover:shadow-xl bg-white"
+                className="border-2 !border-purple-600 rounded-lg p-3 hover:!border-purple-500 transition-all duration-300 shadow-lg hover:shadow-xl bg-white"
               >
                 <div className="flex flex-col gap-2">
                   <div className="flex items-start justify-between gap-2">
