@@ -10,16 +10,28 @@ export function Footer() {
           </p>
           <div className="flex space-x-3 sm:space-x-4">
             <a
-              href="#"
+              href="https://candy-codex.gitbook.io/privacy-policy/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-white transition-colors"
             >
               Privacy Policy
             </a>
             <a
-              href="#"
+              href="https://candy-codex.gitbook.io/terms-of-use/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-white transition-colors"
             >
-              Terms of Service
+              Terms of Use
+            </a>
+            <a
+              href="https://candy-codex.gitbook.io/term-of-earnings/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors"
+            >
+              Terms of Earnings
             </a>
           </div>
         </div>
